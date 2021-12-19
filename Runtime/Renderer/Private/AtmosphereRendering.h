@@ -109,32 +109,17 @@ private:
 bool ShouldRenderAtmosphere(const FSceneViewFamily& Family);
 void InitAtmosphereConstantsInView(FViewInfo& View);
 
-#if 0
+
 // 天空数据，编辑器可调
 class FStylizedSkySceneInfo : public FRenderResource
 {
 public:
 	/** The fog component the scene info is for. */
 	const UAtmosphericFogComponent* Component;
-	float SunMultiplier;
-	float FogMultiplier;
-	float InvDensityMultiplier;
-	float DensityOffset;
-	float GroundOffset;
-	float DistanceScale;
-	float AltitudeScale;
-	float RHeight;
-	float StartDistance;
-	float DistanceOffset;
-	float SunDiscScale;
-	FLinearColor DefaultSunColor;
-	FVector DefaultSunDirection;
-	EAtmosphereRenderFlag RenderFlag;
-	uint32 InscatterAltitudeSampleNum;
-	bool bAtmosphereAffectsSunIlluminance;
-	class FAtmosphereTextureResource* TransmittanceResource;
-	class FAtmosphereTextureResource* IrradianceResource;
-	class FAtmosphereTextureResource* InscatterResource;
+
+	FLinearColor HorizonLineSunsetColor;
+	float SunsetFalloff;
+
 
 
 #if WITH_EDITORONLY_DATA
@@ -180,6 +165,5 @@ private:
 	const FLinearColor TransmittanceAtZenith;
 };
 
-#endif
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

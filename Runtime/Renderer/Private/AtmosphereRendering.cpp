@@ -2022,6 +2022,7 @@ void SetStylizedSkyShaders(FRHICommandList& RHICmdList, FGraphicsPipelineStateIn
 	
 }
 
+// 当前只在手机上有
 void FMobileSceneRenderer::RenderAtmosphereFog(FRHICommandListImmediate& RHICmdList)
 {
 	FAtmosphericFogSceneInfo* AtmosphericFog = Scene->AtmosphericFog;
@@ -2031,7 +2032,7 @@ void FMobileSceneRenderer::RenderAtmosphereFog(FRHICommandListImmediate& RHICmdL
 	}
 
 	// Update RenderFlag based on LightShaftTexture is valid or not
-	AtmosphericFog->RenderFlag |= EAtmosphereRenderFlag::E_DisableLightShaft;
+	//AtmosphericFog->RenderFlag |= EAtmosphereRenderFlag::E_DisableLightShaft;
 
 #if WITH_EDITOR
 	if (Scene->bIsEditorScene)
