@@ -19,6 +19,8 @@ class FShader;
 class FViewInfo;
 class UAtmosphericFogComponent;
 
+class UStylizedSkyComponent;
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS 
 
 enum class EAtmosphereRenderFlag
@@ -115,7 +117,7 @@ class FStylizedSkySceneInfo : public FRenderResource
 {
 public:
 	/** The fog component the scene info is for. */
-	const UAtmosphericFogComponent* Component;
+	const UStylizedSkyComponent* Component;
 
 	FLinearColor HorizonLineSunsetColor;
 	float SunsetFalloff;
@@ -124,6 +126,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Atmosphere pre-computation related data */
+#if 0
 	bool bNeedRecompute;
 	bool bPrecomputationStarted;
 	bool bPrecomputationFinished;
@@ -134,35 +137,24 @@ public:
 	int32 AtmoshpereOrder;
 	class FAtmosphereTextures* AtmosphereTextures;
 	FByteBulkData PrecomputeTransmittance;
+#endif
 	FByteBulkData PrecomputeIrradiance;
-	FByteBulkData PrecomputeInscatter;
+	//FByteBulkData PrecomputeInscatter;
 #endif
 
 	/** Initialization constructor. */
-	explicit FAtmosphericFogSceneInfo(const UAtmosphericFogComponent* InComponent);
-	~FAtmosphericFogSceneInfo();
+	explicit FStylizedSkySceneInfo(const UStylizedSkyComponent* InComponent);
+	~FStylizedSkySceneInfo();
 
 	/** Prepare the sun light data as a function of current atmospheric fog state. */
-	void PrepareSunLightProxy(FLightSceneInfo& SunLight) const;
+	//void PrepareSunLightProxy(FLightSceneInfo& SunLight) const;
 
 #if WITH_EDITOR
-	void PrecomputeTextures(FRDGBuilder& GraphBuilder, const FViewInfo* View, FSceneViewFamily* ViewFamily);
-	void StartPrecompute();
-
-private:
-	/** Atmosphere pre-computation related functions */
-	FIntPoint GetTextureSize();
-	inline void DrawQuad(FRHICommandList& RHICmdList, const FIntRect& ViewRect, const TShaderRef<FShader>& VertexShader);
-	void GetLayerValue(int Layer, float& AtmosphereR, FVector4& DhdH);
-	void RenderAtmosphereShaders(FRHICommandList& RHICmdList, FGraphicsPipelineStateInitializer& GraphicsPSOInit, const FViewInfo& View, const FIntRect& ViewRect);
-	void PrecomputeAtmosphereData(FRHICommandListImmediate& RHICmdList, const FViewInfo* View, FSceneViewFamily& ViewFamily);
-
-	void ReadPixelsPtr(FRHICommandListImmediate& RHICmdList, TRefCountPtr<IPooledRenderTarget> RenderTarget, FColor* OutData, FIntRect InRect);
-	void Read3DPixelsPtr(FRHICommandListImmediate& RHICmdList, TRefCountPtr<IPooledRenderTarget> RenderTarget, FFloat16Color* OutData, FIntRect InRect, FIntPoint InZMinMax);
+	
 #endif
 
 private:
-	const FLinearColor TransmittanceAtZenith;
+
 };
 
 

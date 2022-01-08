@@ -2069,4 +2069,14 @@ void FMobileSceneRenderer::RenderAtmosphereFog(FRHICommandListImmediate& RHICmdL
 		RHICmdList.DrawIndexedPrimitive(GTwoTrianglesIndexBuffer.IndexBufferRHI, 0, 0, 4, 0, 2, 1);
 	}
 }
+
+
+FStylizedSkySceneInfo::FStylizedSkySceneInfo(const UStylizedSkyComponent * InComponent)
+{
+}
+
+FStylizedSkySceneInfo::~FStylizedSkySceneInfo()
+{
+}
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

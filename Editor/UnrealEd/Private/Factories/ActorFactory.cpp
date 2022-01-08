@@ -54,6 +54,7 @@ ActorFactory.cpp:
 #include "ActorFactories/ActorFactoryTriggerCapsule.h"
 #include "ActorFactories/ActorFactoryTriggerSphere.h"
 #include "ActorFactories/ActorFactoryVectorFieldVolume.h"
+#include "ActorFactories/ActorFactoryStylizedSky.h"
 #include "Animation/Skeleton.h"
 #include "Engine/SkeletalMesh.h"
 #include "Animation/AnimationAsset.h"
@@ -79,6 +80,7 @@ ActorFactory.cpp:
 #include "GameFramework/Volume.h"
 #include "Engine/DecalActor.h"
 #include "Atmosphere/AtmosphericFog.h"
+#include "StylizedSky/StylizedSky.h"
 #include "Engine/ExponentialHeightFog.h"
 #include "Engine/SkyLight.h"
 #include "Engine/DirectionalLight.h"
@@ -1648,6 +1650,18 @@ UActorFactoryAtmosphericFog::UActorFactoryAtmosphericFog(const FObjectInitialize
 	PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DisplayName = LOCTEXT("AtmosphericFogDisplayName", "Atmospheric Fog");
 	NewActorClass = AAtmosphericFog::StaticClass();
+	PRAGMA_ENABLE_DEPRECATION_WARNINGS
+}
+
+/*-----------------------------------------------------------------------------
+UActorFactoryStylizedSky
+-----------------------------------------------------------------------------*/
+UActorFactoryStylizedSky::UActorFactoryStylizedSky(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	PRAGMA_DISABLE_DEPRECATION_WARNINGS
+		DisplayName = LOCTEXT("StylizedSkyDisplayName", "Stylized Sky");
+	NewActorClass = AStylizedSky::StaticClass();
 	PRAGMA_ENABLE_DEPRECATION_WARNINGS
 }
 
