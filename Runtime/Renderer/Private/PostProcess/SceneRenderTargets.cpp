@@ -311,7 +311,8 @@ inline const TCHAR* GetSceneColorTargetName(EShadingPath ShadingPath)
 	const TCHAR* SceneColorNames[(uint32)EShadingPath::Num] =
 	{ 
 		TEXT("SceneColorMobile"), 
-		TEXT("SceneColorDeferred")
+		TEXT("SceneColorDeferred"),
+		TEXT("SceneColorForwardPlus")
 	};
 	check((uint32)ShadingPath < UE_ARRAY_COUNT(SceneColorNames));
 	return SceneColorNames[(uint32)ShadingPath];
@@ -1355,6 +1356,17 @@ void FSceneRenderTargets::AllocateMobileRenderTargets(FRHICommandListImmediate& 
 	}
 }
 
+void FSceneRenderTargets::AllocateForwardPlusShadingPathRenderTargets(FRHICommandListImmediate& RHICmdList, const int32 NumViews)
+{
+	// FPlus: 处理rendertargets的分配
+	// on mobile we don't do on demand allocation of SceneColor yet (in other platforms it's released in the Tonemapper Process())
+	AllocSceneColor(RHICmdList);
+	AllocateCommonDepthTargets(RHICmdList);
+	AllocateFoveationTexture(RHICmdList);
+	AllocateVirtualTextureFeedbackBuffer(RHICmdList);
+	AllocateDebugViewModeTargets(RHICmdList);
+}
+
 // This is a helper class. It generates and provides N names with
 // sequentially incremented postfix starting from 0.
 // Example: SomeName0, SomeName1, ..., SomeName117
@@ -1952,13 +1964,19 @@ void FSceneRenderTargets::AllocateRenderTargets(FRHICommandListImmediate& RHICmd
 {
 	if (BufferSize.X > 0 && BufferSize.Y > 0 && IsAllocateRenderTargetsRequired())
 	{
+		// FPlus: 注意正确处理rendertargets的分配
 		if ((EShadingPath)CurrentShadingPath == EShadingPath::Mobile)
 		{
 			AllocateMobileRenderTargets(RHICmdList);
 		}
+		else if ((EShadingPath)CurrentShadingPath == EShadingPath::ForwardPlus)
+		{
+			AllocateForwardPlusShadingPathRenderTargets(RHICmdList, NumViews);
+		}
 		else
 		{
-			AllocateDeferredShadingPathRenderTargets(RHICmdList, NumViews);
+			AllocateForwardPlusShadingPathRenderTargets(RHICmdList, NumViews);
+			// AllocateDeferredShadingPathRenderTargets(RHICmdList, NumViews);
 		}
 	}
 	else if ((EShadingPath)CurrentShadingPath == EShadingPath::Mobile && SceneDepthZ)

@@ -568,6 +568,8 @@ private:
 	/** Allocates render targets for use with the mobile path. */
 	void AllocateMobileRenderTargets(FRHICommandListImmediate& RHICmdList);
 
+	void AllocateForwardPlusShadingPathRenderTargets(FRHICommandListImmediate& RHICmdList, const int32 NumViews = 1);
+
 public:
 	/** Allocates render targets for use with the deferred shading path. */
 	// Temporarily Public to call from DefferedShaderRenderer to attempt recovery from a crash until cause is found.
@@ -638,6 +640,14 @@ private:
 			return ESceneColorFormatType::HighEndWithAlpha;
 		}
 		else if (CurrentShadingPath == EShadingPath::Deferred && !bRequireSceneColorAlpha)
+		{
+			return ESceneColorFormatType::HighEnd;
+		}
+		else if (CurrentShadingPath == EShadingPath::ForwardPlus && (bRequireSceneColorAlpha || GetSceneColorFormat() == PF_FloatRGBA))
+		{
+			return ESceneColorFormatType::HighEndWithAlpha;
+		}
+		else if (CurrentShadingPath == EShadingPath::ForwardPlus && !bRequireSceneColorAlpha)
 		{
 			return ESceneColorFormatType::HighEnd;
 		}

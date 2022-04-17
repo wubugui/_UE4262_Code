@@ -15,6 +15,7 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "Components/SceneCaptureComponentCube.h"
 #include "DeferredShadingRenderer.h"
+#include "ForwardPlusShadingRenderer.h"
 #include "DynamicPrimitiveDrawing.h"
 #include "RenderTargetTemp.h"
 #include "RendererModule.h"
@@ -3160,9 +3161,14 @@ FSceneRenderer* FSceneRenderer::CreateSceneRenderer(const FSceneViewFamily* InVi
 
 	if (ShadingPath == EShadingPath::Deferred)
 	{
-		SceneRenderer = new FDeferredShadingSceneRenderer(InViewFamily, HitProxyConsumer);
+		//SceneRenderer = new FDeferredShadingSceneRenderer(InViewFamily, HitProxyConsumer);
+		SceneRenderer = new FForwardPlusShadingSceneRenderer(InViewFamily, HitProxyConsumer);
 	}
-	else 
+	else if (ShadingPath == EShadingPath::ForwardPlus)
+	{
+		SceneRenderer = new FForwardPlusShadingSceneRenderer(InViewFamily, HitProxyConsumer);
+	}
+	else
 	{
 		check(ShadingPath == EShadingPath::Mobile);
 		SceneRenderer = new FMobileSceneRenderer(InViewFamily, HitProxyConsumer);

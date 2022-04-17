@@ -42,6 +42,7 @@ AStylizedSky::AStylizedSky(const FObjectInitializer& ObjectInitializer)
 		};
 		static FConstructorStatics ConstructorStatics;
 
+
 		if (GetSpriteComponent())
 		{
 			GetSpriteComponent()->Sprite = ConstructorStatics.FogTextureObject.Get();

@@ -3,6 +3,6 @@
 #include "SceneInterface.h"
 
 TArray<FPrimitiveComponentId> FSceneInterface::GetScenePrimitiveComponentIds() const
-{ 
-	return TArray<FPrimitiveComponentId>(); 
+{
+	return TArray<FPrimitiveComponentId>();
 }

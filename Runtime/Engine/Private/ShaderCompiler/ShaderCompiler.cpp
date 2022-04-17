@@ -3633,6 +3633,11 @@ void GlobalBeginCompileShader(
 	{
 		Input.Environment.SetDefine(TEXT("SHADING_PATH_DEFERRED"), 1);
 	}
+	else if (FSceneInterface::GetShadingPath(GetMaxSupportedFeatureLevel(ShaderPlatform)) == EShadingPath::ForwardPlus)
+	{
+		//Input.Environment.SetDefine(TEXT("SHADING_PATH_FORWARDPLUS"), 0);
+		Input.Environment.SetDefine(TEXT("SHADING_PATH_MOBILE"), 1);
+	}
 
 	const bool bUsingMobileRenderer = FSceneInterface::GetShadingPath(GetMaxSupportedFeatureLevel(ShaderPlatform)) == EShadingPath::Mobile;
 	if (bUsingMobileRenderer)

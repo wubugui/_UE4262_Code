@@ -16,6 +16,7 @@ enum class EShadingPath
 {
 	Mobile,
 	Deferred,
+	ForwardPlus,
 	Num,
 };
 

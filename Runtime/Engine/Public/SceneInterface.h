@@ -457,13 +457,15 @@ public:
 	{
 		if (InFeatureLevel >= ERHIFeatureLevel::SM5)
 		{
-			return EShadingPath::Deferred;
+			//return EShadingPath::Deferred;
+			return EShadingPath::ForwardPlus;
 		}
 		else
 		{
 			return EShadingPath::Mobile;
 		}
 	}
+	
 
 	EShadingPath GetShadingPath() const
 	{
